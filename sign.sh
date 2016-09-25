@@ -63,7 +63,7 @@ cat temp.py foot.py >> /root/python/$user.py
 
 #修改系统时区，保证签到计划在正确的时间执行
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-echo tzselect <<EOF
+tzselect <<EOF
 5
 9
 1
