@@ -11,6 +11,18 @@ echo '
 											-Powered by GodZ
 '
 
+function pyinstall(){
+  apt-get install python3 python3-pip -y
+  ln -s /usr/bin/pip-3.2 /usr/bin/pip3
+  pip3 install bs4
+  echo '
+  因为各个系统环境的不同，安装不一定成功，请检查是否安装成功
+  如果不成功，请手动安装python3 pip3 以及bs4依赖
+  '
+
+
+}
+
 apt-get update
 
 #判断是否有python3
@@ -96,15 +108,4 @@ service cron restart
 echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看'
 
 
-function pyinstall(){
-  apt-get install python3 python3-pip -y
-  ln -s /usr/bin/pip-3.2 /usr/bin/pip3
-  pip3 install bs4
-  echo '
-  因为各个系统环境的不同，安装不一定成功，请检查是否安装成功
-  如果不成功，请手动安装python3 pip3 以及bs4依赖
-  '
-
-
-}
 
