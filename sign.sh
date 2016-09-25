@@ -74,6 +74,7 @@ sleep 2
 hwclock -w
 date
 echo '请确认以下时间为正确时间，如果不正确，请手动修改。'
+sleep 5
 #
 
 
