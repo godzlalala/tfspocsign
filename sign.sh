@@ -24,11 +24,11 @@ fi
 #所需配置文件是否存在，如果不存在则从服务器上获取
 
 if [ ! -f "head.py" ]; then
-  wget http://looooool-10019530.file.myqcloud.com/python/head.py
+  wget https://raw.githubusercontent.com/godzlalala/tfspocsign/master/head.py
 fi
 
 if [ ! -f "foot.py" ]; then
-  wget http://looooool-10019530.file.myqcloud.com/python/foot.py
+  wget https://raw.githubusercontent.com/godzlalala/tfspocsign/master/foot.py
 fi
 #
 
@@ -47,12 +47,17 @@ cat temp.py foot.py >> /root/python/$user.py
 
 #修改系统时区，保证签到计划在正确的时间执行
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-echo 5 9 1 1 tzselect
+echo 5 9 1 1 tzselect <<EOF
+5
+9
+1
+1
+EOF
+
+sleep 2
 hwclock -w
 date
 echo '请确认以下时间为正确时间，如果不正确，请手动修改。'
-
-
 #
 
 
