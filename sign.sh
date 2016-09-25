@@ -1,14 +1,22 @@
 #!/bin/sh
 echo '
 	************************************************************
-	*****   本脚本只在debian上通过测试 请自行安装python3   *****
-	*****            请自行使用pip3安装bs4支持             *****
-	*****         本脚本只适用于root用户的VPS使用          *****
+	*****                                                  *****
+	*****            本脚本只在debian上通过测试            *****
+	*****        本脚本只适用于root用户的VPS 独服使用      *****
+	*****                                                  *****
 	************************************************************
                                             
 										
 											-Powered by GodZ
 '
+
+
+#判断是否有python3
+if [ ! -d "/etc/python3" ]; then
+ pyinstall
+fi
+#如果没有就执行安装pip3 python3 bs4的程序
 
 #对所需文件夹判断是否存在，如果不存在则创建文件夹
 #将python和bash文件分别存放，便于管理
@@ -74,6 +82,9 @@ chmod 777 /root/bash/$Name.bash
 rm -rf temp.py  
 #创建之后赋予777权限并删除临时文件
 
+
+
+
 #添加bash计划任务。每日定时执行
 read -p '请输入执行时间（分）： ' m;
 read -p '请输入执行时间（时）： ' h;
@@ -81,6 +92,18 @@ echo $m $h '* * *' /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
 service cron restart
 #计划任务添加完毕
 
+echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看'
 
 
+function pyinstall(){
+  apt-get install python3 python3-pip -y
+  ln -s /usr/bin/pip-3.2 /usr/bin/pip3
+  pip3 install bs4
+  echo '
+  因为各个系统环境的不同，安装不一定成功，请检查是否安装成功
+  如果不成功，请手动安装python3 pip3 以及bs4依赖
+  '
+
+
+}
 
