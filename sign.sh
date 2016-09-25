@@ -19,8 +19,6 @@ function pyinstall(){
   因为各个系统环境的不同，安装不一定成功，请检查是否安装成功
   如果不成功，请手动安装python3 pip3 以及bs4依赖
   '
-
-
 }
 
 apt-get update
@@ -105,7 +103,15 @@ echo $m $h '* * *' /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
 service cron restart
 #计划任务添加完毕
 
-echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看'
+echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看 运行 ./sign.sh uninstall 来卸载程序'
 
+function uninstall (){
+rm -rf rs.log
+rm -rf bash python
+rm -rf *.py
+rm -rf sign.sh
+}
 
-
+if [ $1 = "uninstall" ]; then
+ uninstall
+fi
