@@ -11,6 +11,7 @@ echo '
 											-Powered by GodZ
 '
 
+apt-get update
 
 #判断是否有python3
 if [ ! -d "/etc/python3" ]; then
