@@ -11,23 +11,20 @@ echo '
 											-Powered by GodZ
 '
 
-function pyinstall(){
-  apt-get install python3 python3-pip -y
-  ln -s /usr/bin/pip-3.2 /usr/bin/pip3
-  pip3 install bs4
-  echo '
-  因为各个系统环境的不同，安装不一定成功，请检查是否安装成功
-  如果不成功，请手动安装python3 pip3 以及bs4依赖
-  '
-}
+
 
 apt-get update
 
 #判断是否有python3
 if [ ! -d "/etc/python3" ]; then
- pyinstall
+  apt-get install python3 python3-pip -y
+  ln -s /usr/bin/pip-3.2 /usr/bin/pip3
+  pip3 install bs4
+  echo '因为各个系统环境的不同，安装不一定成功
+  请检查是否安装成功如果不成功，请手动安装python3 pip3 以及bs4依赖'
 fi
-#如果没有就执行安装pip3 python3 bs4的程序
+
+#如果没有就执行安装pip3 python3 bs4
 
 #对所需文件夹判断是否存在，如果不存在则创建文件夹
 #将python和bash文件分别存放，便于管理
@@ -66,7 +63,7 @@ cat temp.py foot.py >> /root/python/$user.py
 
 #修改系统时区，保证签到计划在正确的时间执行
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-echo 5 9 1 1 tzselect <<EOF
+echo tzselect <<EOF
 5
 9
 1
@@ -103,15 +100,4 @@ echo $m $h '* * *' /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
 service cron restart
 #计划任务添加完毕
 
-echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看 运行 ./sign.sh uninstall 来卸载程序'
-
-function uninstall (){
-rm -rf rs.log
-rm -rf bash python
-rm -rf *.py
-rm -rf sign.sh
-}
-
-if [ $1 = "uninstall" ]; then
- uninstall
-fi
+echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看'
