@@ -35,6 +35,10 @@ fi
 if [ ! -d "bash" ]; then
   mkdir bash
 fi
+
+if [ ! -d "cookies" ]; then
+  mkdir cookies
+fi
 #
 
 #所需配置文件是否存在，如果不存在则从服务器上获取
@@ -48,19 +52,6 @@ if [ ! -f "foot.py" ]; then
 fi
 #
 
-#生成签到使用的python文件
-read -p '输入名字: ' Name;
-read -p '输入学号: ' user;
-read -p '输入密码: ' passwd;
-cp head.py temp.py
-echo '
-            username ='"'$user'"'
-            userpw ='"'$passwd'"'
-' >> temp.py
-
-cat temp.py foot.py >> /root/python/$user.py
-#生成完毕
-
 #修改系统时区，保证签到计划在正确的时间执行
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 tzselect <<EOF
@@ -69,7 +60,6 @@ tzselect <<EOF
 1
 1
 EOF
-
 sleep 2
 hwclock -w
 date
@@ -77,28 +67,3 @@ echo '请确认以下时间为正确时间，如果不正确，请手动修改�
 sleep 5
 #
 
-
-#创建用于执行py脚本的bash文件，执行之后删除cookies并将结果写入rs.log，脚本名以名字命名。
-echo '
-#!/bin/bash
-echo "'*****************$Name 签到开始*************************'" >> rs.log
-re=`'python3 /root/python/$user.py'`
-rm -rf /root/cookies/cookie.txt
-echo "$re" >> /root/rs.log
-echo "'*****************$Name 签到结束*************************'" >> rs.log
-' >> /root/bash/$Name.bash
-chmod 777 /root/bash/$Name.bash
-rm -rf temp.py  
-#创建之后赋予777权限并删除临时文件
-
-
-
-
-#添加bash计划任务。每日定时执行
-read -p '请输入执行时间（分）： ' m;
-read -p '请输入执行时间（时）： ' h;
-echo $m $h '* * *' /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
-service cron restart
-#计划任务添加完毕
-
-echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看'
