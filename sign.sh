@@ -83,13 +83,15 @@ echo '
 #!/bin/bash
 echo "'*****************$Name 签到开始*************************'" >> rs.log
 re=`'python3 /root/python/$user.py'`
-rm -rf cookie.txt
+rm -rf /root/cookies/cookie.txt
 echo "$re" >> /root/rs.log
 echo "'*****************$Name 签到结束*************************'" >> rs.log
 ' >> /root/bash/$Name.bash
 chmod 777 /root/bash/$Name.bash
 rm -rf temp.py  
 #创建之后赋予777权限并删除临时文件
+
+
 
 
 #添加bash计划任务。每日定时执行
