@@ -16,25 +16,22 @@ import sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8')
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-
 ssl.create_default_context = 'ssl._create_unverified_context'
 class urphelper:
     def __init__(self):
         self.dbgmode = False
         self.url_base = 'http://spoc.tfswufe.edu.cn/'
-        self.url_urpbase = 'https://urp.tf-swufe.net:8443/'
+        self.url_urpbase = 'http://urp.tf-swufe.net:8080/'
         self.url_signinHost = urljoin(self.url_base, '/XueGong/signin/index')
         self.url_signin = urljoin(self.url_base, '/XueGong/Signin/Signin')
         self.url_SigninRecordList = urljoin(self.url_base, '/XueGong/Signin/SigninRecordList')
-
         self.url_code = urljoin(self.url_urpbase , '/cas/code/code.jsp')
         self.url_login = urljoin(self.url_urpbase , '/cas/login?service=http://spoc.tfswufe.edu.cn/Home/Login')
         self.url_logout = urljoin(self.url_urpbase , '/cas/logout?service=http://spoc.tfswufe.edu.cn/Home/exitlogin')
         self.url_validationCode = urljoin(self.url_urpbase , '/cas/code/validationCode.jsp')
-
         self.name = ''
         self.note = ''
-        self.cookie = http.cookiejar.MozillaCookieJar('cookie.txt')
+        self.cookie = http.cookiejar.MozillaCookieJar('/cookies/cookie.txt')
         self.cookie.clear()
         self.hcp = urllib.request.HTTPCookieProcessor(self.cookie)
         self.opener = urllib.request.build_opener(self.hcp)
