@@ -44,11 +44,11 @@ fi
 #所需配置文件是否存在，如果不存在则从服务器上获取
 
 if [ ! -f "head.py" ]; then
-  wget https://raw.githubusercontent.com/godzlalala/tfspocsign/master/head.py
+  wget --no-check-certificate https://raw.githubusercontent.com/godzlalala/tfspocsign/master/head.py
 fi
 
 if [ ! -f "foot.py" ]; then
-  wget https://raw.githubusercontent.com/godzlalala/tfspocsign/master/foot.py
+  wget --no-check-certificate https://raw.githubusercontent.com/godzlalala/tfspocsign/master/foot.py
 fi
 #
 
@@ -67,3 +67,6 @@ echo '请确认以下时间为正确时间，如果不正确，请手动修改�
 sleep 5
 #
 
+wget --no-check-certificate https://raw.githubusercontent.com/godzlalala/tfspocsign/master/add
+chmod +x add
+./add
