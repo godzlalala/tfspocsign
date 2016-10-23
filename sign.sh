@@ -69,4 +69,6 @@ sleep 5
 
 wget --no-check-certificate https://raw.githubusercontent.com/godzlalala/tfspocsign/master/add
 chmod +x add
+echo "使用./add添加签到帐号"
+sleep 3
 ./add
