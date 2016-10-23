@@ -31,7 +31,7 @@ class urphelper:
         self.url_validationCode = urljoin(self.url_urpbase , '/cas/code/validationCode.jsp')
         self.name = ''
         self.note = ''
-        self.cookie = http.cookiejar.MozillaCookieJar('/cookies/cookie.txt')
+        self.cookie = http.cookiejar.MozillaCookieJar('/root/cookies/cookie.txt')
         self.cookie.clear()
         self.hcp = urllib.request.HTTPCookieProcessor(self.cookie)
         self.opener = urllib.request.build_opener(self.hcp)
