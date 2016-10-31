@@ -29,7 +29,7 @@ rm -rf temp.py
 read -p '请输入执行时间（分）： ' m;
 read -p '请输入执行时间（时）： ' h;
 read -p '是否是周末签到： (输入y只在周末签到。输入其他每天签到)' weekend;
- if [ $weekend = "y" ];then
+ if [ $weekend == "y" ];then
    w="0"
  else
    w="*"
