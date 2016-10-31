@@ -27,6 +27,10 @@ if [ ! -d "/etc/python3" ]; then
   pip3 install bs4
   echo '因为各个系统环境的不同，安装不一定成功
   请检查是否安装成功如果不成功，请手动安装python3 pip3 以及bs4依赖'
+ else
+   apt-get install python3-pip
+   pip3 install --upgrade pip
+   pip3 install bs4
 fi
 
 #如果没有就执行安装pip3 python3 bs4
