@@ -2,22 +2,24 @@
 read -p '输入名字: ' Name;
 read -p '输入学号: ' user;
 read -p '输入密码: ' passwd;
+read -p '输入接收签到结果的邮箱: ' email;
 cp head.py temp.py
 echo '
             username ='"'$user'"'
             userpw ='"'$passwd'"'
 ' >> temp.py
-
 cat temp.py foot.py >> /root/python/$user.py
 #生成完毕
 #创建用于执行py脚本的bash文件，执行之后删除cookies并将结果写入rs.log，脚本名以名字命名。
 echo '
 #!/bin/bash
-echo "'*****************$Name 签到开始*************************'" >> rs.log
+rm -rf /root/rs/rs$user.log
+echo "'*****************$Name 签到开始*************************'" >> /root/rs/rs$user.log
 re=`'python3 /root/python/$user.py'`
 rm -rf /root/cookies/cookie.txt
 echo "$re" >> /root/rs.log
-echo "'*****************$Name 签到结束*************************'" >> rs.log
+echo "'*****************$Name 签到结束*************************'" >> /root/rs/rs$user.log
+cat /root/rs/rs$user.log | mutt -s "签到结果" $email
 ' >> /root/bash/$Name.bash
 chmod 777 /root/bash/$Name.bash
 rm -rf temp.py  
@@ -26,7 +28,13 @@ rm -rf temp.py
 #添加bash计划任务。每日定时执行
 read -p '请输入执行时间（分）： ' m;
 read -p '请输入执行时间（时）： ' h;
-echo $m $h '* * *' /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
+read -p '是否是周末签到： (输入y只在周末签到。输入其他每天签到)' weekend;
+ if [ $weekend = "y" ];then
+   w="0"
+ else
+   w="*"
+ fi
+echo $m $h '* * '$w /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
 #计划任务添加完毕
 
-echo '签到完成之后，结果会在root目录下的rs.log文件里面，请及时查看'
+echo '签到完成之后，结果会在root目录下的rs/$user/rs.log文件里面，请及时查看'
