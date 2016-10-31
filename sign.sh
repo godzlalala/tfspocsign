@@ -13,8 +13,13 @@ echo '
 
 
 
-apt-get update
-
+apt-get update -y
+apt-get install mutt msmtp -y #安装邮件发送系统
+wget --no-check-certificate https://raw.githubusercontent.com/godzlalala/tfspocsign/master/Muttrc
+wget --no-check-certificate https://raw.githubusercontent.com/godzlalala/tfspocsign/master/.msmtprc
+rm -rf /etc/Muttrc
+mv /root/Muttrc /etc/Muttrc
+service postfix restart
 #判断是否有python3
 if [ ! -d "/etc/python3" ]; then
   apt-get install python3 python3-pip -y
@@ -38,6 +43,10 @@ fi
 
 if [ ! -d "cookies" ]; then
   mkdir cookies
+fi
+
+if [ ! -d "rs" ]; then
+  mkdir rs
 fi
 #
 
@@ -72,3 +81,5 @@ chmod +x add
 echo "使用./add添加签到帐号"
 sleep 3
 ./add
+
+
