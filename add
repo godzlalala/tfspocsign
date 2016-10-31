@@ -20,9 +20,10 @@ rm -rf /root/rs/'$user'.log
 echo "'*****************$Name 签到开始*************************'" >> /root/rs/'$user'.log
 re=`'python3 /root/python/$user.py'`
 rm -rf /root/cookies/cookie.txt
-echo '$re' >> /root/rs/'$user'.log
+echo "$re" >> /root/rs/'$user'.log
 echo "'*****************$Name 签到结束*************************'" >> /root/rs/'$user'.log
 cat /root/rs/'$user'.log | mutt -s "签到结果" '$email'
+rm -rf sent
 ' >> /root/bash/$Name.bash
 chmod 777 /root/bash/$Name.bash
 rm -rf temp.py  
