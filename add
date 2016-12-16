@@ -42,4 +42,5 @@ read -p '是否是周末签到： (输入y只在周末签到。输入其他每�
 echo $m $h '* * '$w /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
 #计划任务添加完毕
 service cron reload
+service cron restart
 echo '签到完成之后，结果会在root目录下的rs/'$user'.log文件里面，请及时查看'
