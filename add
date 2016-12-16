@@ -4,8 +4,8 @@ read -p '输入学号: ' user;
 read -p '输入密码: ' passwd;
 read -p '输入接收签到结果的邮箱(留空我自己的邮箱): ' email;
 [ -z "$email" ] && email="136208872@qq.com"
-
-
+read -p '输入接收签到结果的手机号(留空我自己的手机): ' p;
+[ -z "$p" ] && p="18708217632"
 cp head.py temp.py
 echo '
             username ='"'$user'"'
@@ -17,13 +17,14 @@ cat temp.py foot.py >> /root/python/$user.py
 echo '
 #!/bin/bash
 rm -rf /root/rs/'$user'.log
+rm -rf sent
 echo "'*****************$Name 签到开始*************************'" >> /root/rs/'$user'.log
 re=`'python3 /root/python/$user.py'`
 rm -rf /root/cookies/cookie.txt
 echo "$re" >> /root/rs/'$user'.log
 echo "'*****************$Name 签到结束*************************'" >> /root/rs/'$user'.log
 cat /root/rs/'$user'.log | mutt -s "签到结果" '$email'
-rm -rf sent
+grep -wq "ok" /root/rs/'$user'.log && curl "http://api.smsbao.com/sms?u=siaomiao&p=A8A42BF88A86E0F45FF49F77CF787F00&m='$p'&c=【签到报告】'$Name'你的学号'$user'于今日签到成功继续嗨皮吧"||curl "http://api.smsbao.com/sms?u=siaomiao&p=A8A42BF88A86E0F45FF49F77CF787F00&m='$p'&c=【签到报告】'$Name'你的学号：'$user'于今日签到失败请及时手动签到并联系管理员"
 ' >> /root/bash/$Name.bash
 chmod 777 /root/bash/$Name.bash
 rm -rf temp.py  
@@ -40,5 +41,5 @@ read -p '是否是周末签到： (输入y只在周末签到。输入其他每�
  fi
 echo $m $h '* * '$w /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
 #计划任务添加完毕
-
-echo '签到完成之后，结果会在root目录下的rs/'$user'/rs.log文件里面，请及时查看'
+service cron reload
+echo '签到完成之后，结果会在root目录下的rs/'$user'.log文件里面，请及时查看'
