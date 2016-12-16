@@ -25,7 +25,7 @@ echo "$re" >> /root/rs/'$user'.log
 echo "'*****************$Name 签到结束*************************'" >> /root/rs/'$user'.log
 cat /root/rs/'$user'.log | mutt -s "签到结果" '$email'
 ' >> /root/bash/$Name.bash
-#grep -wq "ok" /root/rs/'$user'.log && curl "http://api.smsbao.com/sms?u=&p=&m='$p'&c=【签到报告】'$Name'你的学号'$user'于今日签到成功继续嗨皮吧"||curl "http://api.smsbao.com/sms?u=siaomiao&p=A8A42BF88A86E0F45FF49F77CF787F00&m='$p'&c=【签到报告】'$Name'你的学号：'$user'于今日签到失败请及时手动签到并联系管理员"
+#grep -wq "ok" /root/rs/'$user'.log && curl "http://api.smsbao.com/sms?u=siaomiao&p=A8A42BF88A86E0F45FF49F77CF787F00&m='$p'&c=【签到报告】'$Name'你的学号'$user'于今日签到成功继续嗨皮吧"||curl "http://api.smsbao.com/sms?u=siaomiao&p=A8A42BF88A86E0F45FF49F77CF787F00&m='$p'&c=【签到报告】'$Name'你的学号：'$user'于今日签到失败请及时手动签到并联系管理员"
 chmod 777 /root/bash/$Name.bash
 rm -rf temp.py  
 #创建之后赋予777权限并删除临时文件
@@ -42,5 +42,4 @@ read -p '是否是周末签到： (输入y只在周末签到。输入其他每�
 echo $m $h '* * '$w /root/bash/$Name.bash >> /var/spool/cron/crontabs/root
 #计划任务添加完毕
 service cron reload
-service cron restart
 echo '签到完成之后，结果会在root目录下的rs/'$user'.log文件里面，请及时查看'
